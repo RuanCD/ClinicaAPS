@@ -60,9 +60,9 @@ public class UsuarioService {
 	public List<DadosListagemAgendamento> listarAgendamentos(){
 		Usuario usuario = getUsuario();
 		List<Agendamento> agendamentos = usuario.getAgendamentos();
-		List<Agendamento> agendamentoss = agendamentos.stream().filter(ag -> Boolean.TRUE.equals(ag.getStatus())).collect(Collectors.toList());;
-		List<DadosListagemAgendamento> agendamentosss = agendamentoss.stream().map(agendar -> new DadosListagemAgendamento(agendar.getDataAgendamento(), agendar.getHoraAgendamento(), agendar.getSituacaoAgendamento(), agendar.getMotivoAgendamento()) ).collect(Collectors.toList());
-		return agendamentosss;
+		List<Agendamento> agendamentoFiltro = agendamentos.stream().filter(ag -> Boolean.TRUE.equals(ag.getStatus())).collect(Collectors.toList());;
+		List<DadosListagemAgendamento> agendamentoCliente = agendamentoFiltro.stream().map(agendar -> new DadosListagemAgendamento(agendar.getDataAgendamento(), agendar.getHoraAgendamento(), agendar.getSituacaoAgendamento(), agendar.getMotivoAgendamento()) ).collect(Collectors.toList());
+		return agendamentoCliente;
 	}
 	
 	
