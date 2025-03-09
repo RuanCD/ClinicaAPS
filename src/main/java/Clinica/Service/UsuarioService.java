@@ -1,9 +1,13 @@
 package Clinica.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import Clinica.Agendamento.DadosListagemAgendamento;
 import Clinica.Agendamento.RealizarAgendamentoDTO;
 import Clinica.Endereco.EnderecoDTO;
 import Clinica.Entities.Agendamento;
@@ -42,12 +46,21 @@ public class UsuarioService {
 	
 	
 	public RealizarAgendamentoDTO agendamentoCliente(RealizarAgendamentoDTO agendamentoCliente) {
+		Usuario usuario = getUsuario();
 		Agendamento agendamento = new Agendamento(agendamentoCliente);
 		Local local = localRepository.findByEnderecoLocal(agendamentoCliente.enderecoLocal());
 		agendamento.setLocal(local);
+		agendamento.setUsuario(usuario);
 		agendamentoRepository.save(agendamento);
 		return new RealizarAgendamentoDTO(agendamento, local);
 		
+	}
+	
+	public List<DadosListagemAgendamento> listarAgendamentos(){
+		Usuario usuario = getUsuario();
+		List<Agendamento> agendamentos = usuario.getAgendamentos();
+		List<DadosListagemAgendamento> agendament = agendamentos.stream().map(agendar -> new DadosListagemAgendamento(agendar.getDataAgendamento(), agendar.getHoraAgendamento(), agendar.getSituacaoAgendamento(), agendar.getMotivoAgendamento()) ).collect(Collectors.toList());
+		return agendament;
 	}
 	
 

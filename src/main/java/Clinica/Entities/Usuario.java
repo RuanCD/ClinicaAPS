@@ -52,19 +52,13 @@ public class Usuario implements UserDetails {
 	public Usuario(DadosCadastro cadastro) {
 		this.login = cadastro.login();
 		this.senha = cadastro.senha();
-
 	}
-	
 	
 	@OneToOne
 	private EnderecoUsuario endereço;
 	
-	@OneToMany
-	List<Agendamento> agendamento;
-	
-	
-	
-	
+	@OneToMany(mappedBy = "usuario")
+	private List<Agendamento> agendamentos;
 	
 
 	@Override
