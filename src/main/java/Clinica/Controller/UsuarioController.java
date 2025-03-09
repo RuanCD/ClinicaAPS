@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Clinica.Agendamento.RealizarAgendamentoDTO;
 import Clinica.Endereco.EnderecoDTO;
 import Clinica.Entities.Usuario;
 import Clinica.Repository.UsuarioRepository;
@@ -44,11 +45,21 @@ public class UsuarioController {
 }
 	
 	@PostMapping("/endereco")
+	@Transactional
 	public ResponseEntity<EnderecoDTO> cadastrarEndereco(@RequestBody EnderecoDTO endereco) {
 		EnderecoDTO enderecoCliente =  usuarioService.cadastrarEndereço(endereco);
 		
 		return new ResponseEntity<>(enderecoCliente, HttpStatus.CREATED);
 	}
+	
+	@PostMapping("/agendamento")
+	@Transactional
+	public ResponseEntity<RealizarAgendamentoDTO> cadastroAgendamento(@RequestBody RealizarAgendamentoDTO agendamentoCliente){
+		RealizarAgendamentoDTO agendamentoDTO = usuarioService.agendamentoCliente(agendamentoCliente);
+		return new ResponseEntity<>(agendamentoDTO, HttpStatus.CREATED);
+	}
+	
+	
 	
 
 	

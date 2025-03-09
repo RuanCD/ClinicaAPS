@@ -39,7 +39,7 @@ public class LocalService {
 	    
 	    String foto1 = Base64.getEncoder().encodeToString(local.getFoto1());
 	    String foto2 = Base64.getEncoder().encodeToString(local.getFoto1());
-	    String foto3 =  Base64.getEncoder().encodeToString(local.getFoto1());
+	    String foto3 = Base64.getEncoder().encodeToString(local.getFoto1());
 	    
 	    
 	    return new DadosListagemLocalDTO(local, foto1, foto2, foto3);

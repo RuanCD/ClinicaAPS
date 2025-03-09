@@ -1,6 +1,7 @@
 package Clinica.Entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import Clinica.Local.CadastrarLocalDTO;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -49,5 +51,10 @@ public class Local {
 		this.horarioFechamento = localDTO.horarioFechamento();
 		this.situacaoLocal = localDTO.situacaoLocal();
 	}
+	
+	
+	@OneToMany
+	List<Agendamento> agendamento;
+	
 
 }

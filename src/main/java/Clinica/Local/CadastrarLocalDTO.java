@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import Clinica.Entities.Local;
-
 public record CadastrarLocalDTO(
 		
 		
