@@ -1,13 +1,15 @@
 package Clinica.Service;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Clinica.Entities.Local;
+import Clinica.Local.CadastrarLocalDTO;
+import Clinica.Local.DadosListagemLocalDTO;
 import Clinica.Repository.LocalRepository;
-import Local.CadastrarLocalDTO;
 
 @Service
 public class LocalService {
@@ -15,20 +17,34 @@ public class LocalService {
 	@Autowired
 	LocalRepository localRepository;
 	
-	public CadastrarLocalDTO cadastrarLocal(CadastrarLocalDTO localDTO) {
-		Local local = new Local(localDTO);
-		try {
-			local.setFoto1(localDTO.foto1().getBytes());
-			local.setFoto2(localDTO.foto2().getBytes());
-			local.setFoto3(localDTO.foto3().getBytes());
-			localRepository.save(local);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return new CadastrarLocalDTO(local);
-		
+	public DadosListagemLocalDTO cadastrarLocal(CadastrarLocalDTO localDTO) {
+	    Local local = new Local(localDTO);
+	    try {
+	        if (localDTO.foto1() != null && !localDTO.foto1().isEmpty()) {
+	            local.setFoto1(localDTO.foto1().getBytes());
+	        }
+	        if (localDTO.foto2() != null && !localDTO.foto2().isEmpty()) {
+	            local.setFoto2(localDTO.foto2().getBytes());
+	        }
+	        if (localDTO.foto3() != null && !localDTO.foto3().isEmpty()) {
+	            local.setFoto3(localDTO.foto3().getBytes());
+	        }
+	        localRepository.save(local);
+	        
+	       
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    String foto1 = Base64.getEncoder().encodeToString(local.getFoto1());
+	    String foto2 = Base64.getEncoder().encodeToString(local.getFoto1());
+	    String foto3 =  Base64.getEncoder().encodeToString(local.getFoto1());
+	    
+	    
+	    return new DadosListagemLocalDTO(local, foto1, foto2, foto3);
+	    
 	}
+
 
 }
