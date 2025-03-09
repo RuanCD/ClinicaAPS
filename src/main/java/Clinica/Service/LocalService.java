@@ -2,6 +2,8 @@ package Clinica.Service;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,24 @@ public class LocalService {
 	    return new DadosListagemLocalDTO(local, foto1, foto2, foto3);
 	    
 	}
+	
+	public List<DadosListagemLocalDTO> listarTodosLocais(){
+		List<Local> locais = localRepository.findAll();
+		
+		List<DadosListagemLocalDTO> locaisClinica = locais.stream()
+			    .map(local -> new DadosListagemLocalDTO(
+			        local, 
+			        Base64.getEncoder().encodeToString(local.getFoto1()), 
+			        Base64.getEncoder().encodeToString(local.getFoto2()), 
+			        Base64.getEncoder().encodeToString(local.getFoto3())
+			    ))
+			    .collect(Collectors.toList());
+		
+		return locaisClinica;
+
+	}
+	
+	
 
 
 }
