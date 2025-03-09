@@ -33,6 +33,7 @@ public class Agendamento {
 	private LocalDateTime horaAgendamento;
 	private String situacaoAgendamento;
 	private String motivoAgendamento;
+	private Boolean status = true;
 	
 	
 	public Agendamento(RealizarAgendamentoDTO agendamento) {

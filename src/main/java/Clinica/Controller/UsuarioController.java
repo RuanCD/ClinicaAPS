@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,9 +70,14 @@ public class UsuarioController {
 	public ResponseEntity<List<DadosListagemAgendamento>> listarAgendamentos(){
 		List<DadosListagemAgendamento> agendamentos = usuarioService.listarAgendamentos();
 		return ResponseEntity.ok(agendamentos);
-		
 	}
 	
+	@DeleteMapping("/inativar/{id}")
+	@Transactional
+	public ResponseEntity<?> inativarAgendamento(@PathVariable Long id) {
+		usuarioService.cancelarAgendamento(id);
+		return ResponseEntity.noContent().build();
+	}
 	
 	
 

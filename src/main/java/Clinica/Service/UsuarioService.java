@@ -53,14 +53,25 @@ public class UsuarioService {
 		agendamento.setUsuario(usuario);
 		agendamentoRepository.save(agendamento);
 		return new RealizarAgendamentoDTO(agendamento, local);
-		
 	}
+	
+	
 	
 	public List<DadosListagemAgendamento> listarAgendamentos(){
 		Usuario usuario = getUsuario();
 		List<Agendamento> agendamentos = usuario.getAgendamentos();
 		List<DadosListagemAgendamento> agendament = agendamentos.stream().map(agendar -> new DadosListagemAgendamento(agendar.getDataAgendamento(), agendar.getHoraAgendamento(), agendar.getSituacaoAgendamento(), agendar.getMotivoAgendamento()) ).collect(Collectors.toList());
 		return agendament;
+	}
+	
+	
+	
+	public void cancelarAgendamento(Long id) {
+	 Agendamento agendamento = agendamentoRepository.getReferenceById(id);
+	 Boolean status = agendamento.getStatus();
+	 if(status == true) {
+		 agendamento.setStatus(false);
+	 }
 	}
 	
 
