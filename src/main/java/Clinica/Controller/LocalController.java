@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Clinica.Local.CadastrarLocalDTO;
+import Clinica.Local.DadosListagemCadastroDTO;
 import Clinica.Local.DadosListagemLocalDTO;
 import Clinica.Service.LocalService;
 import jakarta.transaction.Transactional;
@@ -25,11 +26,12 @@ public class LocalController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<DadosListagemLocalDTO> cadastrarLocal(@ModelAttribute CadastrarLocalDTO cadastrarLocal) {
+	public ResponseEntity<DadosListagemCadastroDTO> cadastrarLocal(@ModelAttribute CadastrarLocalDTO cadastrarLocal) {
 		System.out.println(cadastrarLocal.enderecoLocal());
-		DadosListagemLocalDTO dados = localService.cadastrarLocal(cadastrarLocal);
+		DadosListagemCadastroDTO dados = localService.cadastrarLocal(cadastrarLocal);
 		return new ResponseEntity<>(dados, HttpStatus.CREATED);
 	}
+	
 	
 	@GetMapping
 	@Transactional

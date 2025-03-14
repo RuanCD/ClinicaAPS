@@ -31,6 +31,10 @@ public record DadosListagemLocalDTO (
 	}
 	
 	
+
+	
+	
+	
 	
 
 }
