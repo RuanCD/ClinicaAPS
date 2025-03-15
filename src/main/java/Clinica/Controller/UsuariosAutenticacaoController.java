@@ -34,7 +34,7 @@ public class UsuariosAutenticacaoController {
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenDTO> efetuarLogin(@RequestBody @Valid DadosAutenticacaoDTO dados){
-		var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+		var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
 		var autenticacao = manager.authenticate(token);
 		String tokenDTO = tokenservice.criarToken((Usuario) autenticacao.getPrincipal());
 		return ResponseEntity.ok(new TokenDTO(tokenDTO));

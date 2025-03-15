@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import Clinica.Agendamento.DadosListagemAgendamento;
@@ -18,6 +19,7 @@ import Clinica.Repository.AgendamentoRepository;
 import Clinica.Repository.EndereçoRepository;
 import Clinica.Repository.LocalRepository;
 import Clinica.Repository.UsuarioRepository;
+import Clinica.Usuarios.DadosCadastro;
 
 @Service
 public class UsuarioService {
@@ -28,6 +30,8 @@ public class UsuarioService {
 	@Autowired
 	LocalRepository localRepository;
 	
+	@Autowired 
+	private PasswordEncoder password;
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
@@ -35,6 +39,13 @@ public class UsuarioService {
 	
 	@Autowired
 	EndereçoRepository endereçoRepository;
+	
+	public void cadastrarUsuario(DadosCadastro dados) {
+		String codificado = password.encode(dados.senha());
+        Usuario usuario = new Usuario(dados);
+        usuario.setSenha(codificado);
+        usuarioRepository.save(usuario);
+	}
 	
 
 	public EnderecoDTO cadastrarEndereço(EnderecoDTO enderecoUser) {
@@ -81,8 +92,8 @@ public class UsuarioService {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
-            String login = userDetails.getUsername(); 
-            Usuario usuario = (Usuario) usuarioRepository.findByLogin(login);
+            String email = userDetails.getUsername(); 
+            Usuario usuario = (Usuario) usuarioRepository.findByemail(email);
                     
             return usuario;
         }
@@ -94,7 +105,7 @@ public class UsuarioService {
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
             String login = userDetails.getUsername(); 
-            Usuario usuario = (Usuario) usuarioRepository.findByLogin(login);
+            Usuario usuario = (Usuario) usuarioRepository.findByemail(login);
                     
             return usuario.getId();
         }

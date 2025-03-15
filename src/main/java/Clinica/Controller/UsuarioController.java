@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import Clinica.Agendamento.DadosListagemAgendamento;
 import Clinica.Agendamento.RealizarAgendamentoDTO;
 import Clinica.Endereco.EnderecoDTO;
-import Clinica.Entities.Usuario;
-import Clinica.Repository.UsuarioRepository;
 import Clinica.Service.UsuarioService;
 import Clinica.Usuarios.DadosCadastro;
 import jakarta.transaction.Transactional;
@@ -31,23 +28,12 @@ public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
 	
-	
-	@Autowired
-	UsuarioRepository usuarioRepository;
-	
-	@Autowired 
-	private PasswordEncoder password;
-	
-	
-	
+
 	@PostMapping("/cadastro")
 	@Transactional
-	public ResponseEntity<String> cadastroUsuario(@RequestBody DadosCadastro dados) {
-	    String codificado = password.encode(dados.senha());
-	        Usuario usuario = new Usuario(dados);
-	        usuario.setSenha(codificado);
-	        usuarioRepository.save(usuario);
-	        return ResponseEntity.ok().build();
+	public ResponseEntity<?> cadastroUsuario(@RequestBody DadosCadastro dados) {
+	         usuarioService.cadastrarUsuario(dados);
+	        return new ResponseEntity<>(HttpStatus.CREATED);
 }
 	
 	@PostMapping("/endereco")

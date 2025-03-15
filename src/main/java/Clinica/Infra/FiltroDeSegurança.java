@@ -34,7 +34,7 @@ public class FiltroDeSegurança extends OncePerRequestFilter {
 		if (token != null) {
 
 		var verificar = tokenjwt.verificarToken(token);
-		var usuario = usuarioRepository.findByLogin(verificar);
+		var usuario = usuarioRepository.findByemail(verificar);
 		
 		UsernamePasswordAuthenticationToken authenticated = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
 		

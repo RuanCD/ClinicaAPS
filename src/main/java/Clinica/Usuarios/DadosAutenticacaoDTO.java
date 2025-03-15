@@ -1,7 +1,7 @@
 package Clinica.Usuarios;
 
 public record DadosAutenticacaoDTO(
-		String login,
+		String email,
 		String senha
 )
 

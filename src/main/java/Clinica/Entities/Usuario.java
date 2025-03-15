@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,16 +43,21 @@ public class Usuario implements UserDetails {
 	private String login;
 	@JsonIgnore
 	private String senha;
-	private String email_usuario;
-	private String cpf_usuario;
-	private String numero_usuario;
-	private LocalDate data_nascimento;
-	private LocalDate data_cadastro;
+	private String email;
+	private String cpf;
+	private String telefone;
+	private LocalDate dataNascimento;
+	@CreationTimestamp
+	private LocalDate dataCadastro;
 	
 
 	public Usuario(DadosCadastro cadastro) {
 		this.login = cadastro.login();
 		this.senha = cadastro.senha();
+		this.email = cadastro.emailUsuario();
+		this.cpf = cadastro.cpf();
+		this.telefone = cadastro.numeroUsuario();
+		this.dataNascimento = cadastro.dataNascimento();
 	}
 	
 	@OneToOne
@@ -100,4 +106,6 @@ public class Usuario implements UserDetails {
 	public void setSenha(String codificado) {
 		this.senha = codificado;
 	}
+	
+	
 }

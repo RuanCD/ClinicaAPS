@@ -1,7 +1,6 @@
 package Clinica.Local;
 
 import java.time.LocalDate;
-import java.util.Base64;
 
 import Clinica.Entities.Local;
 import lombok.Getter;
