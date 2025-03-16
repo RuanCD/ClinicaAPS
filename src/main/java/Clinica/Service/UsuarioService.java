@@ -21,6 +21,7 @@ import Clinica.Repository.EndereçoRepository;
 import Clinica.Repository.LocalRepository;
 import Clinica.Repository.RoleRepository;
 import Clinica.Repository.UsuarioRepository;
+import Clinica.Usuarios.AlterarDadosDTO;
 import Clinica.Usuarios.DadosCadastro;
 
 @Service
@@ -100,11 +101,15 @@ public class UsuarioService {
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
             String email = userDetails.getUsername(); 
-            Usuario usuario = (Usuario) usuarioRepository.findByemail(email);
-                    
+            Usuario usuario = (Usuario) usuarioRepository.findByEmail(email);
+            
+            if(usuario == null) {
+            	throw new RuntimeException("Nao foi possivel pegar o id");
+            
+            }
             return usuario;
         }
-        return null;
+        throw new RuntimeException("erro inesperado");
     }
 	
 	public Long getUsuarioID() {
@@ -112,11 +117,27 @@ public class UsuarioService {
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
             String login = userDetails.getUsername(); 
-            Usuario usuario = (Usuario) usuarioRepository.findByemail(login);
-                    
+            Usuario usuario = (Usuario) usuarioRepository.findByEmail(login);
+            
+            if(usuario == null) {
+            	throw new RuntimeException("Nao foi possivel pegar o id");
+            }
             return usuario.getId();
         }
-        return null;
+        throw new RuntimeException("erro inesperado");
     }
+	
+	
+	public AlterarDadosDTO alterDadosUsuario(AlterarDadosDTO alterar) {
+		Usuario usuario = getUsuario();
+		if(alterar.login() != null) {
+			usuario.setLogin(alterar.login());
+		}
+		if(alterar.telefone() != null) {
+			usuario.setTelefone(alterar.telefone());
+		}
+		
+		return new AlterarDadosDTO(usuario);
+	}
 
 }

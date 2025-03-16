@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import Clinica.Entities.Role;
 import Clinica.Entities.Usuario;
 import Clinica.Infra.TokenService;
 import Clinica.Repository.RoleRepository;
 import Clinica.Repository.UsuarioRepository;
 import Clinica.Usuarios.DadosAutenticacaoDTO;
 import Clinica.Usuarios.TokenDTO;
-import jakarta.validation.Valid;
 
 
 @RestController
@@ -37,7 +35,7 @@ public class UsuariosAutenticacaoController {
 	
 
 	@PostMapping("/login")
-	public ResponseEntity<TokenDTO> efetuarLogin(@RequestBody @Valid DadosAutenticacaoDTO dados){
+	public ResponseEntity<TokenDTO> efetuarLogin(@RequestBody DadosAutenticacaoDTO dados){
 		var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
 		var autenticacao = manager.authenticate(token);
 		String tokenDTO = tokenservice.criarToken((Usuario) autenticacao.getPrincipal());

@@ -4,8 +4,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,7 @@ public class TokenService {
 		        .withIssuer("Clinica")
 		        .withSubject(usuario.getEmail())
 		        .withClaim("role", pesquisarRole(usuario))
-		        .withExpiresAt(DataExpiraçao())
+		        .withExpiresAt(DataExpiracao())
 		        .sign(algorithm);
 		    
 		} catch (JWTCreationException exception){
@@ -49,10 +47,8 @@ public class TokenService {
 		
 	}
 		catch (Exception e) {
-			return "d";
+			return null;
 		}
-		
-	
 		
 	}
 	
@@ -73,7 +69,7 @@ public class TokenService {
 		
 	}	
 	
-	private Instant DataExpiraçao() {
+	private Instant DataExpiracao() {
 		return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
 		
 	}

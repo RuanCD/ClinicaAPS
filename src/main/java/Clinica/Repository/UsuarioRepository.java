@@ -7,7 +7,7 @@ import Clinica.Entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	UserDetails findByemail(String login);
+	UserDetails findByEmail(String login);
 
 	
 }

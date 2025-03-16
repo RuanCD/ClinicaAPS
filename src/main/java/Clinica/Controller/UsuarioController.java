@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,10 @@ import Clinica.Agendamento.DadosListagemAgendamento;
 import Clinica.Agendamento.RealizarAgendamentoDTO;
 import Clinica.Endereco.EnderecoDTO;
 import Clinica.Service.UsuarioService;
+import Clinica.Usuarios.AlterarDadosDTO;
 import Clinica.Usuarios.DadosCadastro;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -32,7 +35,7 @@ public class UsuarioController {
 
 	@PostMapping("/cadastro")
 	@Transactional
-	public ResponseEntity<?> cadastroUsuario(@RequestBody DadosCadastro dados) {
+	public ResponseEntity<?> cadastroUsuario(@RequestBody @Valid DadosCadastro dados) {
 	         usuarioService.cadastrarUsuario(dados);
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 }
@@ -67,6 +70,12 @@ public class UsuarioController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PatchMapping("/alterardados")
+	@Transactional
+	public ResponseEntity<AlterarDadosDTO> alterarDados(@RequestBody AlterarDadosDTO alterarDados){
+		AlterarDadosDTO alteracao = usuarioService.alterDadosUsuario( alterarDados);
+		return ResponseEntity.ok().body(alteracao);
+	}
 	
 
 	
