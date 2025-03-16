@@ -17,6 +17,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -66,11 +68,12 @@ public class Usuario implements UserDetails {
 	@OneToMany(mappedBy = "usuario")
 	private List<Agendamento> agendamentos;
 	
+	@ManyToOne
+	private Role role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-
+	    return List.of(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
 	}
 
 	@Override

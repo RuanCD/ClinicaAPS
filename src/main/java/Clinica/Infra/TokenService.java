@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class TokenService {
 		    return JWT.create()
 		        .withIssuer("Clinica")
 		        .withSubject(usuario.getEmail())
+		        .withClaim("role", pesquisarRole(usuario))
 		        .withExpiresAt(DataExpiraçao())
 		        .sign(algorithm);
 		    
@@ -34,6 +37,24 @@ public class TokenService {
 		}
 	}	
 	
+	
+	public String pesquisarRole(Usuario usuario) {
+		try {
+		if(usuario.getRole().getRole() != null) {
+			return usuario.getRole().getRole();
+		}
+		else {
+			return null;
+		}
+		
+	}
+		catch (Exception e) {
+			return "d";
+		}
+		
+	
+		
+	}
 	
 	public String verificarToken(String token){
 		try {

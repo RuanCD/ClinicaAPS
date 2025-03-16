@@ -14,15 +14,20 @@ import Clinica.Endereco.EnderecoDTO;
 import Clinica.Entities.Agendamento;
 import Clinica.Entities.EnderecoUsuario;
 import Clinica.Entities.Local;
+import Clinica.Entities.Role;
 import Clinica.Entities.Usuario;
 import Clinica.Repository.AgendamentoRepository;
 import Clinica.Repository.EndereçoRepository;
 import Clinica.Repository.LocalRepository;
+import Clinica.Repository.RoleRepository;
 import Clinica.Repository.UsuarioRepository;
 import Clinica.Usuarios.DadosCadastro;
 
 @Service
 public class UsuarioService {
+	
+	@Autowired 	
+	RoleRepository roleRepository;
 	
 	@Autowired
 	AgendamentoRepository agendamentoRepository;
@@ -43,6 +48,8 @@ public class UsuarioService {
 	public void cadastrarUsuario(DadosCadastro dados) {
 		String codificado = password.encode(dados.senha());
         Usuario usuario = new Usuario(dados);
+        Role role = roleRepository.findByRole("user");
+        usuario.setRole(role);
         usuario.setSenha(codificado);
         usuarioRepository.save(usuario);
 	}

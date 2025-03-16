@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Clinica.Entities.Role;
 import Clinica.Entities.Usuario;
 import Clinica.Infra.TokenService;
+import Clinica.Repository.RoleRepository;
 import Clinica.Repository.UsuarioRepository;
 import Clinica.Usuarios.DadosAutenticacaoDTO;
 import Clinica.Usuarios.TokenDTO;
@@ -24,6 +26,8 @@ public class UsuariosAutenticacaoController {
 	@Autowired
 	UsuarioRepository repository;
 	
+	@Autowired
+	RoleRepository roleRepository;
 	
 	@Autowired
 	private AuthenticationManager manager;
